@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Billa Bharath | AI &amp; Data Science Engineer Portfolio</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Plus Jakarta Sans, Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: {
+              950: '#070b14',
+              900: '#0b1120',
+              800: '#111827',
+              700: '#1e293b',
+            },
+            paper: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Subtle Blueprint Coordinate Grid */
+    .neural-grid-bg {
+      background-size: 40px 40px;
+      background-image:
+        linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+    }
+    html:not(.dark) .neural-grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(2, 132, 199, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.07) 1px, transparent 1px);
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Modal Entry Animation */
+    @keyframes modalScaleIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-panel {
+      animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.3);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0284c7;
+    }
+  </style>
+</head>
+<body class="bg-paper-50 text-slate-900 dark:bg-obsidian-900 dark:text-slate-100 font-sans antialiased transition-colors duration-300 selection:bg-sky-500 selection:text-white">
+
+  <!-- Toast Notification Banner (Replaces alert()) -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+  <!-- Sticky Glassmorphic Navigation Bar -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-paper-50/85 dark:bg-obsidian-900/85 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Brand Monogram -->
+      <a href="#top" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-600 via-cyan-500 to-emerald-500 flex items-center justify-center text-white font-mono font-bold text-sm shadow-lg shadow-sky-500/20 group-hover:scale-105 transition-transform">
+          BB
+        </div>
+        <div class="flex flex-col">
+          <span class="font-heading font-bold text-sm sm:text-base tracking-tight text-slate-900 dark:text-white">BILLA BHARATH</span>
+          <span class="text-[11px] font-mono text-sky-600 dark:text-sky-400 leading-none">AI &amp; DATA SCIENCE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#experience" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Experience</a>
+        <a href="#projects" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Projects</a>
+        <a href="#skills" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Skills</a>
+        <a href="#education" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Education</a>
+        <a href="#certifications" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Certifications</a>
+        <a href="#contact" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Right Controls: Light/Dark Mode Toggle & Mobile Menu -->
+      <div class="flex items-center gap-2.5">
+        <button id="theme-toggle" aria-label="Toggle Light or Dark Theme" class="p-2.5 rounded-xl bg-white dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:border-sky-500 hover:text-sky-600 dark:hover:text-sky-400 transition-all shadow-sm">
+          <i id="theme-icon" class="fa-solid fa-sun text-sm"></i>
+        </button>
+
+        <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-sky-600/20 transition-all">
+          <span>Hire / Connect</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+
+        <button id="mobile-menu-btn" aria-label="Open Navigation Menu" class="lg:hidden p-2.5 rounded-xl bg-white dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200">
+          <i class="fa-solid fa-bars text-sm"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-paper-50 dark:bg-obsidian-900 px-4 py-3 space-y-1.5">
+      <a href="#experience" class="mobile-nav-link block py-2 px-3 rounded-lg text-sm font-medium hover:bg-slate-200/60 dark:hover:bg-slate-800">Experience</a>
+      <a href="#projects" class="mobile-nav-link block py-2 px-3 rounded-lg text-sm font-medium hover:bg-slate-200/60 dark:hover:bg-slate-800">Projects</a>
+      <a href="#skills" class="mobile-nav-link block py-2 px-3 rounded-lg text-sm font-medium hover:bg-slate-200/60 dark:hover:bg-slate-800">Skills</a>
+      <a href="#education" class="mobile-nav-link block py-2 px-3 rounded-lg text-sm font-medium hover:bg-slate-200/60 dark:hover:bg-slate-800">Education</a>
+      <a href="#certifications" class="mobile-nav-link block py-2 px-3 rounded-lg text-sm font-medium hover:bg-slate-200/60 dark:hover:bg-slate-800">Certifications</a>
+      <a href="#contact" class="mobile-nav-link block py-2 px-3 rounded-lg text-sm font-medium text-sky-600 dark:text-sky-400">Contact</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- 1. Hero & Profile Card Section with Interactive Neural-Network Canvas -->
+    <section class="relative overflow-hidden neural-grid-bg border-b border-slate-200/80 dark:border-slate-800/80">
+      <!-- Interactive Neural Network Particle Canvas -->
+      <canvas id="neural-canvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-65 dark:opacity-80"></canvas>
+
+      <!-- Ambient Radial Glows -->
+      <div class="absolute -top-28 -left-28 w-96 h-96 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          
+          <!-- Left Column: Name, Headline, Bio & Actions -->
+          <div class="lg:col-span-8 space-y-6">
+            <!-- Status & Location Badge -->
+            <div class="inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-700 dark:text-sky-300 text-xs font-mono font-medium">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span>AI &amp; Data Science Engineer</span>
+              <span class="text-slate-400">•</span>
+              <span><i class="fa-solid fa-location-dot text-sky-500 mr-1"></i>Hyderabad, India</span>
+            </div>
+
+            <!-- Main Name & Title -->
+            <div class="space-y-3">
+              <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08]">
+                BILLA <span class="bg-gradient-to-r from-sky-500 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">BHARATH</span>
+              </h1>
+              <p class="font-heading text-lg sm:text-xl font-semibold text-slate-700 dark:text-slate-200">
+                AI &amp; Data Science Engineer &nbsp;|&nbsp; Computer Vision &amp; Predictive Modeling
+              </p>
+            </div>
+
+            <!-- Bio / Objective -->
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+              Passionate about AI, machine learning, and building intelligent solutions to real-world problems. Experienced in developing real-time object detection systems and predictive models, with a strong interest in turning data into meaningful insights and practical applications.
+            </p>
+
+            <!-- Direct CTA Buttons -->
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <a href="#projects" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-lg shadow-sky-600/25 transition-all">
+                <i class="fa-solid fa-microchip"></i>
+                <span>View Projects</span>
+              </a>
+
+              <a href="https://www.linkedin.com/in/bharath-billa" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white dark:bg-obsidian-800/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 font-semibold text-sm shadow-sm transition-all">
+                <i class="fa-brands fa-linkedin text-sky-600 dark:text-sky-400 text-base"></i>
+                <span>LinkedIn</span>
+              </a>
+
+              <button onclick="copyToClipboard('billabablu27@gmail.com', 'Email address')" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-obsidian-800/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-mono text-xs sm:text-sm shadow-sm transition-all">
+                <i class="fa-regular fa-copy text-emerald-500"></i>
+                <span>Copy Email</span>
+              </button>
+
+              <button onclick="copyToClipboard('+91 9392451382', 'Phone number')" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-obsidian-800/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-mono text-xs sm:text-sm shadow-sm transition-all">
+                <i class="fa-solid fa-phone text-amber-500"></i>
+                <span>+91 9392451382</span>
+              </button>
+            </div>
+
+            <!-- Key Highlights Strip -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 dark:border-slate-800/80 max-w-2xl">
+              <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-obsidian-800/80 border border-slate-200/80 dark:border-slate-700/70 backdrop-blur-sm">
+                <div class="font-mono text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400">0.97 mAP@0.5</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">YOLOv8 Infrared Detection</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-obsidian-800/80 border border-slate-200/80 dark:border-slate-700/70 backdrop-blur-sm">
+                <div class="font-mono text-lg sm:text-xl font-bold text-sky-600 dark:text-sky-400">86% Acc / 91% Prec</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Telecom Churn XGBoost</div>
+              </div>
+              <div class="p-3.5 rounded-2xl bg-white/80 dark:bg-obsidian-800/80 border border-slate-200/80 dark:border-slate-700/70 backdrop-blur-sm">
+                <div class="font-mono text-lg sm:text-xl font-bold text-amber-600 dark:text-amber-400">9.61 CGPA / 8.4 SGPA</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Academic Excellence</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Editorial Profile Card -->
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="w-full max-w-xs bg-white/95 dark:bg-obsidian-800/95 backdrop-blur-xl rounded-3xl border border-slate-200 dark:border-slate-700/80 p-6 shadow-2xl relative">
+              <!-- Card Header Metadata -->
+              <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-5">
+                <span>HYDERABAD, IN</span>
+                <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold">AI / ML</span>
+              </div>
+
+              <!-- Geometric 'BB' Monogram Avatar with Local Photo Upload Preview -->
+              <div class="relative mx-auto w-36 h-36 mb-5">
+                <div class="w-full h-full rounded-full bg-gradient-to-tr from-sky-600 via-cyan-400 to-emerald-400 p-1 shadow-lg shadow-sky-500/20">
+                  <div class="w-full h-full rounded-full bg-paper-50 dark:bg-obsidian-950 flex items-center justify-center overflow-hidden relative">
+                    <svg id="bb-monogram-svg" class="w-full h-full" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="bbGrad" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#0284c7" />
+                          <stop offset="55%" stop-color="#38bdf8" />
+                          <stop offset="100%" stop-color="#10b981" />
+                        </linearGradient>
+                      </defs>
+                      <circle cx="80" cy="80" r="76" fill="url(#bbGrad)" fill-opacity="0.12" />
+                      <circle cx="80" cy="80" r="61" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 4" />
+                      <polygon points="80,14 137,47 137,113 80,146 23,113 23,47" stroke="#10b981" stroke-opacity="0.22" stroke-width="1" fill="none" />
+                      <text x="80" y="93" text-anchor="middle" fill="url(#bbGrad)" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="40" letter-spacing="2">BB</text>
+                    </svg>
+                    <img id="uploaded-photo-preview" src="" alt="Billa Bharath" class="hidden w-full h-full object-cover" />
+                  </div>
+                </div>
+
+                <!-- Local Photo Preview Trigger -->
+                <label for="profile-photo-input" title="Upload Portrait Photo (Local Browser Preview)" class="absolute -bottom-1 right-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-600 hover:bg-sky-500 text-white text-[11px] font-mono font-medium shadow-md cursor-pointer border-2 border-white dark:border-obsidian-800 transition-transform hover:scale-105">
+                  <i class="fa-solid fa-camera"></i>
+                  <span>Upload Photo</span>
+                  <input id="profile-photo-input" type="file" accept="image/*" class="hidden" />
+                </label>
+              </div>
+
+              <!-- Profile Details -->
+              <div class="text-center space-y-1">
+                <h2 class="font-heading font-bold text-lg text-slate-900 dark:text-white">BILLA BHARATH</h2>
+                <p class="text-xs font-mono text-sky-600 dark:text-sky-400">B.Tech AI &amp; Data Science</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 pt-0.5">B V Raju Institute of Technology</p>
+              </div>
+
+              <!-- Quick Action Links -->
+              <div class="mt-5 pt-4 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center justify-around text-xs font-mono">
+                <a href="tel:+919392451382" class="text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors flex items-center gap-1.5">
+                  <i class="fa-solid fa-phone text-amber-500"></i>
+                  <span>Call</span>
+                </a>
+                <span class="text-slate-300 dark:text-slate-700">|</span>
+                <a href="mailto:billabablu27@gmail.com" class="text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors flex items-center gap-1.5">
+                  <i class="fa-solid fa-envelope text-emerald-500"></i>
+                  <span>Email</span>
+                </a>
+                <span class="text-slate-300 dark:text-slate-700">|</span>
+                <a href="https://www.linkedin.com/in/bharath-billa" target="_blank" rel="noopener noreferrer" class="text-slate-600 dark:text-slate-300 hover:text-sky-500 transition-colors flex items-center gap-1.5">
+                  <i class="fa-brands fa-linkedin text-sky-500"></i>
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Experience Section -->
+    <section id="experience" class="py-16 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+      <div class="mb-10">
+        <div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-2">
+          // Industry Experience
+        </div>
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          Internship &amp; Applied AI
+        </h2>
+      </div>
+
+      <div class="bg-white dark:bg-obsidian-800 rounded-3xl border border-slate-200 dark:border-slate-700/80 p-6 sm:p-8 shadow-sm hover:border-sky-500/60 transition-all">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100 dark:border-slate-700/80">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-600 to-emerald-500 text-white flex items-center justify-center shadow-md shrink-0">
+              <i class="fa-solid fa-robot text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+                AI Intern
+              </h3>
+              <p class="text-sm sm:text-base font-medium text-sky-600 dark:text-sky-400 mt-0.5">
+                Viswam.AI (Swecha Initiative) &bull; Hyderabad, India
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+              Jun 2025 – Jul 2025
+            </span>
+            <span class="px-3 py-1.5 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+              4-Week Intensive
+            </span>
+          </div>
+        </div>
+
+        <ul class="mt-6 space-y-3 text-sm sm:text-base text-slate-600 dark:text-slate-300">
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+            <span>Worked on real-world AI problem-solving tasks during a four-week intensive internship.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+            <span>Applied machine learning concepts to practical use cases and AI-based solutions.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+            <span>Gained hands-on experience in data processing, model development, and collaborative engineering workflows.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. Interactive Featured Projects Showcase -->
+    <section id="projects" class="py-16 sm:py-24 bg-white dark:bg-obsidian-800/40 border-y border-slate-200/80 dark:border-slate-800/80 reveal">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div>
+            <div class="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
+              // Featured Research &amp; Engineering
+            </div>
+            <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+              AI &amp; Machine Learning Projects
+            </h2>
+            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-400 mt-2 max-w-2xl">
+              Real-time infrared computer vision and high-precision telecom customer churn modeling backed by quantitative benchmarks.
+            </p>
+          </div>
+
+          <!-- Interactive Category Filter Tabs -->
+          <div id="project-filter-tabs" class="flex flex-wrap gap-2">
+            <button data-filter="all" class="proj-tab active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-sky-600 text-white shadow-md shadow-sky-600/20 transition-all">
+              All (2)
+            </button>
+            <button data-filter="cv-dl" class="proj-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-paper-50 dark:bg-obsidian-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-sky-500 transition-all">
+              Computer Vision &amp; DL
+            </button>
+            <button data-filter="predictive-ml" class="proj-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-paper-50 dark:bg-obsidian-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-sky-500 transition-all">
+              Predictive ML
+            </button>
+          </div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div id="projects-container" class="grid grid-cols-1 lg:grid-cols-2 gap-7">
+          <!-- Cards populated via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Categorized Technical Skills Matrix -->
+    <section id="skills" class="py-16 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-2">
+            // Technical Stack
+          </div>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Technical Skills Matrix
+          </h2>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterSkills('all', this)" class="skill-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-sky-600 text-white shadow-sm transition-all">
+            All Categories
+          </button>
+          <button onclick="filterSkills('languages', this)" class="skill-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-white dark:bg-obsidian-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all">
+            Languages
+          </button>
+          <button onclick="filterSkills('ml', this)" class="skill-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-white dark:bg-obsidian-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all">
+            Machine Learning
+          </button>
+          <button onclick="filterSkills('cv', this)" class="skill-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-white dark:bg-obsidian-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all">
+            Deep Learning &amp; CV
+          </button>
+          <button onclick="filterSkills('tools', this)" class="skill-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-white dark:bg-obsidian-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-all">
+            Libraries &amp; Tools
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Languages -->
+        <div data-skill-cat="languages" class="skill-group-card bg-white dark:bg-obsidian-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm hover:border-sky-500/60 transition-all">
+          <div class="w-11 h-11 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-4">
+            <i class="fa-solid fa-code text-lg"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white mb-1">Languages</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Core programming &amp; relational querying</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">Python</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">SQL (Basic)</span>
+          </div>
+        </div>
+
+        <!-- Machine Learning -->
+        <div data-skill-cat="ml" class="skill-group-card bg-white dark:bg-obsidian-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm hover:border-emerald-500/60 transition-all">
+          <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
+            <i class="fa-solid fa-diagram-project text-lg"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white mb-1">Machine Learning</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Ensemble classifiers &amp; tabular predictive models</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">Random Forest</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">XGBoost</span>
+          </div>
+        </div>
+
+        <!-- Deep Learning & Computer Vision -->
+        <div data-skill-cat="cv" class="skill-group-card bg-white dark:bg-obsidian-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm hover:border-amber-500/60 transition-all">
+          <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4">
+            <i class="fa-solid fa-eye text-lg"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white mb-1">Deep Learning &amp; CV</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Real-time object detection &amp; attention blocks</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">YOLOv8</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">Object Detection</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">CBAM &amp; Attention</span>
+          </div>
+        </div>
+
+        <!-- Libraries & Tools -->
+        <div data-skill-cat="tools" class="skill-group-card bg-white dark:bg-obsidian-800 rounded-3xl p-6 border border-slate-200 dark:border-slate-700/80 shadow-sm hover:border-cyan-500/60 transition-all">
+          <div class="w-11 h-11 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-4">
+            <i class="fa-solid fa-toolbox text-lg"></i>
+          </div>
+          <h3 class="font-heading font-bold text-lg text-slate-900 dark:text-white mb-1">Libraries &amp; Tools</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Scientific computing, vision &amp; ML pipelines</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">NumPy</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">Pandas</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">OpenCV</span>
+            <span class="px-3 py-1.5 rounded-xl text-xs font-mono font-medium bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">Scikit-learn</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Education Timeline Section -->
+    <section id="education" class="py-16 sm:py-24 bg-white dark:bg-obsidian-800/40 border-y border-slate-200/80 dark:border-slate-800/80 reveal">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-12">
+          <div class="text-xs font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
+            // Academic Credentials
+          </div>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Education Timeline
+          </h2>
+        </div>
+
+        <div class="relative border-l-2 border-sky-500/30 ml-3 sm:ml-6 space-y-8">
+          <!-- B.Tech -->
+          <div class="relative pl-8 sm:pl-10">
+            <span class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-sky-500 ring-4 ring-sky-500/20"></span>
+            <div class="bg-paper-50 dark:bg-obsidian-800 rounded-3xl p-6 sm:p-7 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-sky-500/10 text-sky-700 dark:text-sky-300">
+                  Jun 2024 – May 2027
+                </span>
+                <span class="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                  Current SGPA: 8.4
+                </span>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">
+                Bachelor of Technology in Artificial Intelligence &amp; Data Science
+              </h3>
+              <p class="text-sm font-medium text-sky-600 dark:text-sky-400 mt-1">
+                B V Raju Institute of Technology &bull; Narsapur, TS
+              </p>
+            </div>
+          </div>
+
+          <!-- Diploma -->
+          <div class="relative pl-8 sm:pl-10">
+            <span class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></span>
+            <div class="bg-paper-50 dark:bg-obsidian-800 rounded-3xl p-6 sm:p-7 border border-slate-200 dark:border-slate-700/80 shadow-sm">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300">
+                  Jun 2021 – Apr 2024
+                </span>
+                <span class="px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+                  CGPA: 9.61
+                </span>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white">
+                Diploma in Cloud Computing &amp; Big Data
+              </h3>
+              <p class="text-sm font-medium text-emerald-600 dark:text-emerald-400 mt-1">
+                Govt Institute of Electronics &bull; Secunderabad, TS
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Verified Certifications & Extra-Curricular Activities -->
+    <section id="certifications" class="py-16 sm:py-24 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+      <div class="mb-10">
+        <div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-2">
+          // Credentials &amp; Community
+        </div>
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
+          Certifications &amp; Extra-Curriculars
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Verified Certifications (7 cols) -->
+        <div class="lg:col-span-7 space-y-4">
+          <h3 class="font-heading text-lg font-bold flex items-center gap-2 text-slate-800 dark:text-slate-200">
+            <i class="fa-solid fa-certificate text-sky-500"></i>
+            <span>Verified Certifications</span>
+          </h3>
+
+          <!-- Cert 1: SQL HackerRank -->
+          <div class="p-5 rounded-3xl bg-white dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-sky-500/60 transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-database text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-base text-slate-900 dark:text-white">SQL (Basic) — HackerRank</h4>
+                <div class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">
+                  Certificate ID: <span class="text-emerald-600 dark:text-emerald-400 font-semibold">C849D85696C4</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="copyToClipboard('C849D85696C4', 'HackerRank Certificate ID')" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-paper-100 dark:bg-slate-700/80 hover:bg-sky-600 hover:text-white text-xs font-mono font-medium transition-colors shrink-0 self-start sm:self-center">
+              <i class="fa-regular fa-copy"></i>
+              <span>Copy ID</span>
+            </button>
+          </div>
+
+          <!-- Cert 2: AI Intern Viswam.AI -->
+          <div class="p-5 rounded-3xl bg-white dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-sky-500/60 transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-award text-lg"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-base text-slate-900 dark:text-white">AI INTERN — Viswam.AI</h4>
+                <div class="text-xs font-mono text-slate-500 dark:text-slate-400 mt-1">
+                  Certificate ID: <span class="text-sky-600 dark:text-sky-400 font-semibold">ce6K1Aytqz</span>
+                </div>
+              </div>
+            </div>
+            <button onclick="copyToClipboard('ce6K1Aytqz', 'Viswam.AI Certificate ID')" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-paper-100 dark:bg-slate-700/80 hover:bg-sky-600 hover:text-white text-xs font-mono font-medium transition-colors shrink-0 self-start sm:self-center">
+              <i class="fa-regular fa-copy"></i>
+              <span>Copy ID</span>
+            </button>
+          </div>
+
+          <!-- Cert 3: AI Ethics Udemy -->
+          <div class="p-5 rounded-3xl bg-white dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 shadow-sm flex items-start gap-4 hover:border-amber-500/60 transition-all">
+            <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-scale-balanced text-lg"></i>
+            </div>
+            <div>
+              <h4 class="font-heading font-bold text-base text-slate-900 dark:text-white">Artificial Intelligence Ethics Certification — Udemy</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Responsible AI design, fairness, bias mitigation, and ethical deployment practices.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extra-Curricular & Interests (5 cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <h3 class="font-heading text-lg font-bold flex items-center gap-2 text-slate-800 dark:text-slate-200">
+            <i class="fa-solid fa-compass text-emerald-500"></i>
+            <span>Extra-Curricular &amp; Interests</span>
+          </h3>
+
+          <div class="bg-white dark:bg-obsidian-800 rounded-3xl border border-slate-200 dark:border-slate-700/80 p-6 shadow-sm space-y-5">
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-users text-base"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-base text-slate-900 dark:text-white">AI/ML Communities &amp; Collaborative Builds</h4>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                  Actively participate in AI/ML learning communities and collaborative technical projects to explore emerging deep learning architectures.
+                </p>
+              </div>
+            </div>
+
+            <div class="pt-5 border-t border-slate-100 dark:border-slate-700/80 flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fa-solid fa-film text-base"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-bold text-base text-slate-900 dark:text-white">Creative Storytelling &amp; Visual Narratives</h4>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
+                  Explore creative storytelling, character arcs, and world-building through watching anime.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Contact & Interactive Message Composer -->
+    <section id="contact" class="py-16 sm:py-24 bg-white dark:bg-obsidian-800/40 border-t border-slate-200/80 dark:border-slate-800/80 reveal">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          <!-- Left: Direct Contact Cards -->
+          <div class="lg:col-span-5 space-y-6">
+            <div>
+              <div class="text-xs font-mono font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-2">
+                // Get In Touch
+              </div>
+              <h2 class="font-heading text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+                Let's Connect
+              </h2>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                Open to AI &amp; Machine Learning internships, Computer Vision research projects, and Data Science roles.
+              </p>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Email -->
+              <div class="p-4 rounded-2xl bg-paper-50 dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-envelope"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[11px] font-mono text-slate-400">EMAIL</div>
+                    <a href="mailto:billabablu27@gmail.com" class="text-sm font-semibold truncate block hover:text-sky-500">
+                      billabablu27@gmail.com
+                    </a>
+                  </div>
+                </div>
+                <button onclick="copyToClipboard('billabablu27@gmail.com', 'Email')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-sky-600 hover:text-white text-xs font-mono border border-slate-200 dark:border-slate-600 transition-colors shrink-0">
+                  Copy
+                </button>
+              </div>
+
+              <!-- Phone -->
+              <div class="p-4 rounded-2xl bg-paper-50 dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-phone"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[11px] font-mono text-slate-400">PHONE</div>
+                    <a href="tel:+919392451382" class="text-sm font-semibold truncate block hover:text-emerald-500">
+                      +91 9392451382
+                    </a>
+                  </div>
+                </div>
+                <button onclick="copyToClipboard('+91 9392451382', 'Phone number')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-emerald-600 hover:text-white text-xs font-mono border border-slate-200 dark:border-slate-600 transition-colors shrink-0">
+                  Copy
+                </button>
+              </div>
+
+              <!-- LinkedIn -->
+              <div class="p-4 rounded-2xl bg-paper-50 dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                    <i class="fa-brands fa-linkedin-in text-base"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[11px] font-mono text-slate-400">LINKEDIN</div>
+                    <a href="https://www.linkedin.com/in/bharath-billa" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold truncate block hover:text-sky-500">
+                      linkedin.com/in/bharath-billa
+                    </a>
+                  </div>
+                </div>
+                <a href="https://www.linkedin.com/in/bharath-billa" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 hover:bg-sky-600 hover:text-white text-xs font-mono border border-slate-200 dark:border-slate-600 transition-colors shrink-0">
+                  Open
+                </a>
+              </div>
+
+              <!-- Location -->
+              <div class="p-4 rounded-2xl bg-paper-50 dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700/80 flex items-center gap-3.5">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <div class="text-[11px] font-mono text-slate-400">LOCATION</div>
+                  <div class="text-sm font-semibold text-slate-800 dark:text-slate-200">Hyderabad, India</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive Message Composer -->
+          <div class="lg:col-span-7">
+            <div class="bg-paper-50 dark:bg-obsidian-800 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700/80 shadow-lg">
+              <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-1">Interactive Message Composer</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Draft an inquiry below to generate a ready-to-launch email link or copy the formatted message.</p>
+
+              <form id="inquiry-form" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="inq-name" class="block text-xs font-mono font-medium text-slate-600 dark:text-slate-300 mb-1.5">Your Name</label>
+                    <input id="inq-name" type="text" required placeholder="e.g., Riya Verma" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-sky-500 transition-colors" />
+                  </div>
+                  <div>
+                    <label for="inq-email" class="block text-xs font-mono font-medium text-slate-600 dark:text-slate-300 mb-1.5">Your Email</label>
+                    <input id="inq-email" type="email" required placeholder="name@company.com" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-sky-500 transition-colors" />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="inq-subject" class="block text-xs font-mono font-medium text-slate-600 dark:text-slate-300 mb-1.5">Topic</label>
+                  <select id="inq-subject" class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-sky-500 transition-colors">
+                    <option value="AI / Data Science Opportunity">AI / Data Science Opportunity</option>
+                    <option value="Computer Vision / YOLOv8 Project">Computer Vision / YOLOv8 Project</option>
+                    <option value="Machine Learning Internship">Machine Learning Internship</option>
+                    <option value="General Networking">General Networking</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="inq-message" class="block text-xs font-mono font-medium text-slate-600 dark:text-slate-300 mb-1.5">Message</label>
+                  <textarea id="inq-message" rows="4" required placeholder="Hi Bharath, I reviewed your YOLOv8 and XGBoost projects and would love to connect..." class="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-obsidian-900 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-sky-500 transition-colors"></textarea>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-2">
+                  <button type="submit" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-sm shadow-md shadow-sky-600/20 transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Prepare Email</span>
+                  </button>
+                  <button type="button" onclick="copyInquiryDraft()" class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold text-xs sm:text-sm border border-slate-200 dark:border-slate-600 transition-colors">
+                    <i class="fa-regular fa-clipboard"></i>
+                    <span>Copy Formatted Inquiry</span>
+                  </button>
+                </div>
+              </form>
+
+              <!-- Generated Email Preview Panel -->
+              <div id="inquiry-preview-panel" class="hidden mt-6 p-4 rounded-2xl bg-sky-500/10 border border-sky-500/25 text-xs font-mono space-y-2">
+                <div class="flex items-center justify-between text-sky-600 dark:text-sky-400 font-bold">
+                  <span><i class="fa-solid fa-circle-check mr-1.5"></i>READY TO SEND</span>
+                  <a id="inquiry-mailto-anchor" href="#" class="underline hover:text-emerald-400">Open Mail App &rarr;</a>
+                </div>
+                <pre id="inquiry-preview-text" class="whitespace-pre-wrap text-slate-700 dark:text-slate-300 leading-relaxed"></pre>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 py-8 text-xs text-slate-500 dark:text-slate-400">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="font-mono">
+        &copy; 2026 <span class="text-slate-800 dark:text-slate-200 font-semibold">BILLA BHARATH</span>. AI &amp; Data Science Portfolio.
+      </div>
+      <div class="flex items-center gap-5 font-mono">
+        <a href="https://www.linkedin.com/in/bharath-billa" target="_blank" rel="noopener noreferrer" class="hover:text-sky-500 transition-colors">LinkedIn</a>
+        <a href="mailto:billabablu27@gmail.com" class="hover:text-sky-500 transition-colors">Email</a>
+        <a href="#top" class="hover:text-sky-500 transition-colors">Back to Top &uarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Architecture & Metrics Modal -->
+  <div id="architecture-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+    <div class="modal-panel relative w-full max-w-2xl bg-white dark:bg-obsidian-800 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-2xl overflow-hidden">
+      <div id="modal-gradient-bar" class="h-2 w-full bg-gradient-to-r from-sky-500 via-cyan-400 to-emerald-400"></div>
+
+      <div class="p-6 sm:p-8 max-h-[85vh] overflow-y-auto">
+        <div class="flex items-start justify-between gap-4 mb-4">
+          <span id="modal-cat-badge" class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-sky-500/10 text-sky-600 dark:text-sky-300 border border-sky-500/20"></span>
+          <button onclick="closeArchitectureModal()" aria-label="Close modal" class="w-9 h-9 rounded-xl bg-paper-100 dark:bg-slate-700 hover:bg-rose-500 hover:text-white flex items-center justify-center transition-colors shrink-0">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <h3 id="modal-proj-title" class="font-heading text-2xl font-bold text-slate-900 dark:text-white mb-3"></h3>
+        <p id="modal-proj-desc" class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6"></p>
+
+        <!-- Quantitative Metrics Grid inside Modal -->
+        <div id="modal-metrics-box" class="mb-6"></div>
+
+        <!-- Architecture & Engineering Pipeline -->
+        <div class="bg-paper-50 dark:bg-obsidian-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/80 mb-6">
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3">
+            <i class="fa-solid fa-network-wired mr-1.5"></i>Model Architecture &amp; Pipeline
+          </h4>
+          <ul id="modal-pipeline-list" class="space-y-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300"></ul>
+        </div>
+
+        <!-- Tech Stack Tags -->
+        <div>
+          <h4 class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-400 mb-2.5">Tech Stack &amp; Datasets</h4>
+          <div id="modal-tech-tags" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Structured Project Data from Billa Bharath's Resume
+    const bharathProjects = [
+      {
+        id: 'yolov8-infrared',
+        title: 'YOLOv8-Based Infrared Living Object Detection',
+        category: 'cv-dl',
+        categoryLabel: 'Computer Vision & DL',
+        icon: 'fa-solid fa-crosshairs',
+        accentGradient: 'from-sky-500 to-emerald-400',
+        summary: 'Built an advanced low-light infrared object detection system by enhancing YOLOv8 with Convolutional Block Attention Modules (CBAM) and Transformer blocks, trained and evaluated on the LLVIP dataset. Achieves mAP@0.5 of 0.97—outperforming baseline YOLOv8—while running real-time pedestrian inference in low-light conditions.',
+        metrics: [
+          { label: 'mAP@0.5 Score', value: '0.97', percent: 97, color: 'bg-emerald-500', textColor: 'text-emerald-600 dark:text-emerald-400' },
+          { label: 'Inference Speed', value: 'Real-Time', percent: 95, color: 'bg-sky-500', textColor: 'text-sky-600 dark:text-sky-400' }
+        ],
+        pipeline: [
+          'Integrated Convolutional Block Attention Modules (CBAM) into the YOLOv8 backbone to sharpen spatial and channel feature focus on thermal/infrared signatures.',
+          'Embedded Transformer encoder blocks to capture global contextual relationships in low-contrast nighttime scenes.',
+          'Trained and benchmarked on the LLVIP paired visible-infrared pedestrian dataset, reaching 0.97 mAP@0.5 with real-time low-light inference.'
+        ],
+        tags: ['YOLOv8', 'CBAM', 'Transformer', 'OpenCV', 'Python', 'LLVIP Dataset']
+      },
+      {
+        id: 'telecom-churn',
+        title: 'Customer Churn Prediction in Telecom Industry',
+        category: 'predictive-ml',
+        categoryLabel: 'Predictive ML',
+        icon: 'fa-solid fa-chart-area',
+        accentGradient: 'from-cyan-500 to-amber-400',
+        summary: 'End-to-end machine learning pipeline designed to help telecom service providers identify subscribers at risk of cancellation for proactive retention strategies. Built with data preprocessing, feature engineering, and XGBoost classification.',
+        metrics: [
+          { label: 'Accuracy', value: '86%', percent: 86, color: 'bg-sky-500', textColor: 'text-sky-600 dark:text-sky-400' },
+          { label: 'Precision', value: '91%', percent: 91, color: 'bg-emerald-500', textColor: 'text-emerald-600 dark:text-emerald-400' },
+          { label: 'Recall', value: '81%', percent: 81, color: 'bg-amber-500', textColor: 'text-amber-600 dark:text-amber-400' },
+          { label: 'F1-Score', value: '85%', percent: 85, color: 'bg-cyan-500', textColor: 'text-cyan-600 dark:text-cyan-400' }
+        ],
+        pipeline: [
+          'Performed thorough data cleaning, missing-value handling, and categorical encoding across subscriber usage and billing records using Pandas & NumPy.',
+          'Engineered domain-specific churn indicators (tenure ratios, contract types, service add-on frequencies) to boost discriminative power.',
+          'Trained and tuned an XGBoost classifier achieving 86% accuracy, 91% precision, 81% recall, and 85% F1-score to power targeted retention campaigns.'
+        ],
+        tags: ['XGBoost', 'Scikit-learn', 'Pandas', 'NumPy', 'Feature Engineering']
+      }
+    ];
+
+    // Render Project Cards with Animated Metric Bars
+    function renderBharathProjects(filter = 'all') {
+      const container = document.getElementById('projects-container');
+      const items = filter === 'all'
+        ? bharathProjects
+        : bharathProjects.filter(p => p.category === filter);
+
+      container.innerHTML = items.map(proj => `
+        <article class="group bg-paper-50 dark:bg-obsidian-800 rounded-3xl border border-slate-200 dark:border-slate-700/80 p-6 sm:p-8 shadow-sm hover:shadow-xl hover:border-sky-500/60 transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-3 mb-5">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br ${proj.accentGradient} text-white flex items-center justify-center shadow-md">
+                <i class="${proj.icon} text-lg"></i>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20">
+                ${proj.categoryLabel}
+              </span>
+            </div>
+
+            <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors mb-3">
+              ${proj.title}
+            </h3>
+
+            <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+              ${proj.summary}
+            </p>
+
+            <!-- Quantitative Metrics Bars -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-obsidian-900/90 border border-slate-200/80 dark:border-slate-700/80 mb-6 space-y-3">
+              <div class="text-[11px] font-mono font-semibold uppercase tracking-wider text-slate-400">Benchmark Metrics</div>
+              <div class="grid grid-cols-2 gap-3">
+                ${proj.metrics.map(m => `
+                  <div>
+                    <div class="flex items-center justify-between text-xs font-mono mb-1">
+                      <span class="text-slate-500 dark:text-slate-400">${m.label}</span>
+                      <span class="font-bold ${m.textColor}">${m.value}</span>
+                    </div>
+                    <div class="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                      <div class="h-full rounded-full ${m.color}" style="width: ${m.percent}%"></div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-200/70 dark:border-slate-700/70 space-y-4">
+            <div class="flex flex-wrap gap-1.5">
+              ${proj.tags.map(tag => `
+                <span class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-white dark:bg-obsidian-900 text-slate-700 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700">
+                  ${tag}
+                </span>
+              `).join('')}
+            </div>
+
+            <button onclick="openArchitectureModal('${proj.id}')" class="w-full py-3 px-4 rounded-xl bg-white dark:bg-slate-700/70 hover:bg-sky-600 hover:text-white text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-600 hover:border-sky-600 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-all">
+              <span>View Architecture &amp; Metrics</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Project Category Filter Tabs
+    document.querySelectorAll('.proj-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.proj-tab').forEach(t => {
+          t.classList.remove('active', 'bg-sky-600', 'text-white', 'shadow-md', 'shadow-sky-600/20');
+          t.classList.add('bg-paper-50', 'dark:bg-obsidian-800', 'text-slate-700', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700');
+        });
+        tab.classList.add('active', 'bg-sky-600', 'text-white', 'shadow-md', 'shadow-sky-600/20');
+        tab.classList.remove('bg-paper-50', 'dark:bg-obsidian-800', 'text-slate-700', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700');
+        renderBharathProjects(tab.dataset.filter);
+      });
+    });
+
+    // Open Project Architecture & Metrics Modal
+    function openArchitectureModal(projectId) {
+      const proj = bharathProjects.find(p => p.id === projectId);
+      if (!proj) return;
+
+      document.getElementById('modal-gradient-bar').className = `h-2 w-full bg-gradient-to-r ${proj.accentGradient}`;
+      document.getElementById('modal-cat-badge').textContent = proj.categoryLabel;
+      document.getElementById('modal-proj-title').textContent = proj.title;
+      document.getElementById('modal-proj-desc').textContent = proj.summary;
+
+      document.getElementById('modal-metrics-box').innerHTML = `
+        <div class="grid grid-cols-2 sm:grid-cols-${proj.metrics.length} gap-3">
+          ${proj.metrics.map(m => `
+            <div class="p-3.5 rounded-2xl bg-paper-50 dark:bg-obsidian-900 border border-slate-200 dark:border-slate-700/80">
+              <div class="text-[11px] font-mono text-slate-400">${m.label}</div>
+              <div class="font-mono text-lg font-bold ${m.textColor} mt-0.5">${m.value}</div>
+              <div class="w-full h-1.5 rounded-full bg-slate-200 dark:bg-slate-700 mt-2 overflow-hidden">
+                <div class="h-full rounded-full ${m.color}" style="width: ${m.percent}%"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      document.getElementById('modal-pipeline-list').innerHTML = proj.pipeline.map(step => `
+        <li class="flex items-start gap-2.5">
+          <i class="fa-solid fa-circle-check text-emerald-500 mt-1 shrink-0"></i>
+          <span>${step}</span>
+        </li>
+      `).join('');
+
+      document.getElementById('modal-tech-tags').innerHTML = proj.tags.map(tag => `
+        <span class="px-3 py-1 rounded-lg text-xs font-mono bg-paper-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200">
+          ${tag}
+        </span>
+      `).join('');
+
+      const modal = document.getElementById('architecture-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeArchitectureModal() {
+      const modal = document.getElementById('architecture-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('architecture-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'architecture-modal') closeArchitectureModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeArchitectureModal();
+    });
+
+    // Interactive Skills Matrix Filter
+    function filterSkills(category, btnEl) {
+      document.querySelectorAll('.skill-filter-btn').forEach(b => {
+        b.classList.remove('bg-sky-600', 'text-white', 'shadow-sm');
+        b.classList.add('bg-white', 'dark:bg-obsidian-800', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700');
+      });
+      btnEl.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
+      btnEl.classList.remove('bg-white', 'dark:bg-obsidian-800', 'text-slate-600', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-slate-700');
+
+      document.querySelectorAll('.skill-group-card').forEach(card => {
+        if (category === 'all' || card.dataset.skillCat === category) {
+          card.classList.remove('opacity-35', 'scale-95');
+          if (category !== 'all') {
+            card.classList.add('ring-2', 'ring-sky-500/50');
+          } else {
+            card.classList.remove('ring-2', 'ring-sky-500/50');
+          }
+        } else {
+          card.classList.add('opacity-35', 'scale-95');
+          card.classList.remove('ring-2', 'ring-sky-500/50');
+        }
+      });
+    }
+
+    // Toast Notification Helper
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-900 dark:bg-sky-600 text-white text-xs sm:text-sm font-medium shadow-xl border border-slate-700 dark:border-sky-400/30 transition-all';
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 dark:text-white"></i><span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        setTimeout(() => toast.remove(), 280);
+      }, 2800);
+    }
+
+    // Copy to Clipboard using execCommand fallback for iFrame reliability
+    function copyToClipboard(text, label = 'Value') {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast(`${label} copied: ${text}`);
+      } catch (err) {
+        showToast(`Unable to copy ${label}`);
+      }
+      document.body.removeChild(textarea);
+    }
+
+    // Local Portrait Photo Upload Preview
+    document.getElementById('profile-photo-input').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = document.getElementById('uploaded-photo-preview');
+        const svg = document.getElementById('bb-monogram-svg');
+        img.src = evt.target.result;
+        img.classList.remove('hidden');
+        svg.classList.add('hidden');
+        showToast('Profile photo preview updated locally!');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Interactive Message Composer
+    document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('inq-name').value.trim();
+      const email = document.getElementById('inq-email').value.trim();
+      const subject = document.getElementById('inq-subject').value;
+      const message = document.getElementById('inq-message').value.trim();
+
+      const formatted = `To: billabablu27@gmail.com\nSubject: [${subject}] — ${name}\nFrom: ${name} (${email})\n\n${message}`;
+      document.getElementById('inquiry-preview-text').textContent = formatted;
+
+      const mailtoHref = `mailto:billabablu27@gmail.com?subject=${encodeURIComponent(`[${subject}] — ${name}`)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+      document.getElementById('inquiry-mailto-anchor').href = mailtoHref;
+
+      document.getElementById('inquiry-preview-panel').classList.remove('hidden');
+      showToast('Email draft ready to launch!');
+    });
+
+    function copyInquiryDraft() {
+      const name = document.getElementById('inq-name').value.trim() || 'Visitor';
+      const subject = document.getElementById('inq-subject').value;
+      const message = document.getElementById('inq-message').value.trim();
+      if (!message) {
+        showToast('Please enter a message first');
+        return;
+      }
+      copyToClipboard(`Subject: [${subject}] — ${name}\n\n${message}`, 'Inquiry text');
+    }
+
+    // Light / Dark Mode Switcher
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    themeToggleBtn.addEventListener('click', () => {
+      const htmlEl = document.documentElement;
+      htmlEl.classList.toggle('dark');
+      const isDark = htmlEl.classList.contains('dark');
+      themeIcon.className = isDark ? 'fa-solid fa-sun text-sm' : 'fa-solid fa-moon text-sm';
+    });
+
+    // Mobile Menu Drawer Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+    });
+
+    // Scroll Reveal Observer
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    // Responsive Hero Neural Network Particle Canvas
+    function initNeuralCanvas() {
+      const canvas = document.getElementById('neural-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width = 0;
+      let height = 0;
+      let particles = [];
+
+      function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        width = canvas.width = rect.width;
+        height = canvas.height = rect.height;
+        const count = Math.min(48, Math.floor((width * height) / 18000));
+        particles = Array.from({ length: count }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          r: Math.random() * 1.8 + 1.2
+        }));
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, width, height);
+        const isDark = document.documentElement.classList.contains('dark');
+        const nodeColor = isDark ? 'rgba(56, 189, 248, 0.55)' : 'rgba(2, 132, 199, 0.4)';
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = nodeColor;
+          ctx.fill();
+
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 130) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              const alpha = (1 - dist / 130) * (isDark ? 0.22 : 0.16);
+              ctx.strokeStyle = isDark ? `rgba(16, 185, 129, ${alpha})` : `rgba(2, 132, 199, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(animateParticles);
+      }
+
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      animateParticles();
+    }
+
+    // Initialize Everything on Window Load
+    window.addEventListener('load', () => {
+      renderBharathProjects('all');
+      initScrollReveal();
+      initNeuralCanvas();
+    });
+  </script>
+</body>
+</html>
